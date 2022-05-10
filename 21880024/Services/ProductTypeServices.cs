@@ -51,9 +51,67 @@ namespace _21880024.Services
         public static int delete(int id)
         {
             ProductTypeRepository repository = ProductTypeRepository.getInstance();
-            if (id >= 0)
+            BillRepository billRepository = BillRepository.getInstance();
+            BillOutRepository billOutRepository = BillOutRepository.getInstance();
+
+            bool permisionDelete = true;
+            List<Bill> bills = billRepository.findAll();
+            ProductRepository repositoryProduct = ProductRepository.getInstance();
+            List<Product> products = new List<Product>();
+
+            if (id > 0)
             {
-                return repository.delete(id);
+                ProductType productType = repository.findById(id);
+                products = repositoryProduct.findByProductType(productType.productTypeName);
+                    if (products != null)
+                    {
+                        foreach (Product item in products)
+                        {
+
+                            foreach (Bill item1 in bills)
+                            {
+                                if (item1.productNumber == item.productNumber)
+                                {
+                                    permisionDelete = false;
+                                    break;
+                                }
+                            }
+                            List<BillOut> billOuts = billOutRepository.findAll();
+                            foreach (BillOut item2 in billOuts)
+                            {
+                                foreach (ProductInBill item3 in item2.productInBill)
+                                {
+                                    if (item3.productNumber == item.productNumber)
+                                    {
+                                        permisionDelete = false;
+                                        break;
+                                    }
+                                }
+                                if (!permisionDelete)
+                                {
+                                    break;
+                                }
+                            }
+
+                        }
+                    
+                    }
+                if (permisionDelete)
+                {
+                    if (repositoryProduct.deleteAllProductByProductType(productType.productTypeName))
+                    {
+                        return repository.delete(id);
+                    }
+                    else
+                    {
+                        return Error.ERROR;
+                    }
+                }
+                else
+                {
+                    return Error.PERMISION;
+                }
+
             }
             else
             {

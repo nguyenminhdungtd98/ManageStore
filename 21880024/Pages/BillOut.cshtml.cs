@@ -25,6 +25,8 @@ namespace _21880024.Pages
         public List<ProductType> productTypes { get; set; }
         public List<Product> products { get; set; }
 
+        public List<Warehouse> productsInStock { get; set; }
+
         public List<ProductInBill> productInBills { get; set; }
         public List<BillOut> billOuts { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -51,11 +53,13 @@ namespace _21880024.Pages
             {
                 SetAlert(ErrorMessage.OUTSTOCK, Error.ERROR);
             }
-                productTypes = ProductTypeServices.findAll();
+            productsInStock = WarehouseServices.findAll();
+            productTypes = ProductTypeServices.findAll();
             products = ProductServices.findAll();
             numberBillOut = BillOutServices.getMaxId() + 1;
             createDate = DateTime.Now;
             productInBills = BillOutServices.findAllProductInBill();
+            BillOutServices.deleteAllBillOutTemps();
             if (idDeleteP > 0)
             {
                 if (BillOutServices.deleteProductInBill(idDeleteP))
@@ -109,6 +113,7 @@ namespace _21880024.Pages
                         }
                         else if (result.Equals(Error.SUCCESS))
                         {
+
                             Response.Redirect("/BillOut");
                         }
                     }
@@ -119,9 +124,10 @@ namespace _21880024.Pages
                     BillOut billOut = new BillOut();
                     billOut.numberBillOut = numberBillOut;
                     billOut.productInBill = productInBills;
-                    billOut.createDate = createDate;
+                    billOut.createDate = DateTime.Now;
                     BillOutServices.add(billOut);
-                    Response.Redirect("/BillOut?error="+ Error.SUCCESS);
+
+                    Response.Redirect("/BillOutManage");
 
                 }
                 

@@ -4,7 +4,6 @@ D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\bin\Debug\
 D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\bin\Debug\net5.0\Data\product.json
 D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\bin\Debug\net5.0\Data\ProductType.json
 D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\bin\Debug\net5.0\Data\warehouse.json
-D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\bin\Debug\net5.0\sv.json
 D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\bin\Debug\net5.0\21880024.exe
 D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\bin\Debug\net5.0\21880024.deps.json
 D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\bin\Debug\net5.0\21880024.runtimeconfig.json
@@ -53,3 +52,6 @@ D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\obj\Debug\
 D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\obj\Debug\net5.0\Razor\Pages\WareHouse.cshtml.g.cs
 D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\bin\Debug\net5.0\Data\ProductInBill.json
 D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\bin\Debug\net5.0\Data\BillOut.json
+D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\obj\Debug\net5.0\Razor\Pages\BillOutManage.cshtml.g.cs
+D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\obj\Debug\net5.0\Razor\Pages\BillOutUpdate.cshtml.g.cs
+D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\bin\Debug\net5.0\Data\BillOutTemp.json

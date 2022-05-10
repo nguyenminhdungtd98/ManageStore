@@ -234,7 +234,7 @@ namespace _21880024.DAL
                 }
                 return itemsExpire;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return null;
@@ -245,9 +245,9 @@ namespace _21880024.DAL
         {
             try
             {
-                for (int i = 0; i < itemsInWarehouse.Count;i++)
+                for (int i = 0; i < itemsInWarehouse.Count; i++)
                 {
-                    for (int j = 0; j < billOut.productInBill.Count;j ++)
+                    for (int j = 0; j < billOut.productInBill.Count; j++)
                     {
                         if (itemsInWarehouse[i].productNumber.Equals(billOut.productInBill[j].productNumber))
                         {
@@ -262,7 +262,8 @@ namespace _21880024.DAL
                 }
                 SaveFileData(itemsInWarehouse);
                 return true;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return false;
@@ -280,7 +281,232 @@ namespace _21880024.DAL
                     }
                 }
                 return true;
-            }catch(Exception e)
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        public bool updateWareHouseOut(BillOut billOut)
+        {
+            try
+            {
+                for (int i = 0; i < billOut.productInBill.Count; i++)
+                {
+                    for (int j = 0; j < itemsInWarehouse.Count; j++)
+                    {
+                        if (billOut.productInBill[i].productNumber == itemsInWarehouse[j].productNumber)
+                        {
+                            Warehouse itemEdit = itemsInWarehouse[j];
+                            int numberOld = itemEdit.number;
+                            itemEdit.number = numberOld - billOut.productInBill[i].number;
+                            itemsInWarehouse[j] = itemEdit;
+                        }
+                    }
+                }
+                SaveFileData(itemsInWarehouse);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        public bool updateWareHouseOutToEdit(BillOut billOutnew, BillOut billOutOld)
+        {
+            try
+            {
+                loadData();
+                if (billOutnew.productInBill.Count == billOutOld.productInBill.Count)
+                {
+                    for (int i = 0; i < billOutnew.productInBill.Count; i++)
+                    {
+                        for (int j = 0; j < billOutOld.productInBill.Count; j++)
+                        {
+                            Warehouse itemEdit = new Warehouse();
+                            int numberFinal = 0;
+                            int index = 0;
+                            if ((billOutnew.productInBill[i].productNumber == billOutOld.productInBill[j].productNumber) && (billOutnew.productInBill[i].number != billOutOld.productInBill[j].number))
+                            {
+                                numberFinal = billOutnew.productInBill[i].number - billOutOld.productInBill[j].number;
+                                index = checkExist(billOutnew.productInBill[i].productNumber);
+                                itemEdit = itemsInWarehouse[index];
+
+                                itemEdit.number = itemEdit.number - numberFinal;
+                                itemsInWarehouse[index] = itemEdit;
+
+                                SaveFileData(itemsInWarehouse);
+                                loadData();
+
+
+                            }
+
+                        }
+                    }
+                }
+                else if(billOutnew.productInBill.Count > billOutOld.productInBill.Count) 
+                {
+                    List<int> productTemps = new List<int>();
+                    for (int i = 0; i < billOutnew.productInBill.Count; i++)
+                    {
+                        for (int j = 0; j < billOutOld.productInBill.Count; j++)
+                        {
+                            if (billOutnew.productInBill[i].productNumber == billOutOld.productInBill[j].productNumber)
+                            {
+                                productTemps.Add(billOutnew.productInBill[i].productNumber);
+                            }
+                        }
+                    }
+                    for (int i = 0; i < billOutnew.productInBill.Count; i++)
+                    {
+                        for (int j = 0; j < billOutOld.productInBill.Count; j++)
+                        {
+                            Warehouse itemEdit = new Warehouse();
+                            int numberFinal = 0;
+                            int index = 0;
+                            if ((billOutnew.productInBill[i].productNumber == billOutOld.productInBill[j].productNumber) && (billOutnew.productInBill[i].number != billOutOld.productInBill[j].number))
+                            {
+                                numberFinal = billOutnew.productInBill[i].number - billOutOld.productInBill[j].number;
+                                index = checkExist(billOutnew.productInBill[i].productNumber);
+                                itemEdit = itemsInWarehouse[index];
+
+                                itemEdit.number = itemEdit.number - numberFinal;
+                                itemsInWarehouse[index] = itemEdit;
+
+                                SaveFileData(itemsInWarehouse);
+                                loadData();
+
+                            }
+
+                        }
+                    }
+                    ProductInBill product = new ProductInBill();
+                    for (int i = 0; i < billOutnew.productInBill.Count; i++)
+                    {
+                        bool skip = false;
+                        for (int j  = 0; j < productTemps.Count; j++)
+                        {
+                            if (billOutnew.productInBill[i].productNumber == productTemps[j])
+                            {
+                                skip = true;
+                                break;
+                            }
+                        }
+                        if (!skip)
+                        {
+                            Warehouse warehouse = new Warehouse();
+                            product = billOutnew.productInBill[i];
+                            int index = checkExist(product.productNumber);
+                            warehouse = itemsInWarehouse[index];
+                            warehouse.number = warehouse.number - product.number;
+
+                            itemsInWarehouse[index] = warehouse;
+
+                            SaveFileData(itemsInWarehouse);
+                            loadData();
+                        }
+
+                    }
+
+
+
+                } else
+                {
+                    List<int> productTemps = new List<int>();
+                    for (int i = 0; i < billOutnew.productInBill.Count; i++)
+                    {
+                        for (int j = 0; j < billOutOld.productInBill.Count; j++)
+                        {
+                            if (billOutnew.productInBill[i].productNumber == billOutOld.productInBill[j].productNumber)
+                            {
+                                productTemps.Add(billOutnew.productInBill[i].productNumber);
+                            }
+                        }
+                    }
+                    for (int i = 0; i < billOutnew.productInBill.Count; i++)
+                    {
+                        for (int j = 0; j < billOutOld.productInBill.Count; j++)
+                        {
+                            Warehouse itemEdit = new Warehouse();
+                            int numberFinal = 0;
+                            int index = 0;
+                            if ((billOutnew.productInBill[i].productNumber == billOutOld.productInBill[j].productNumber) && (billOutnew.productInBill[i].number != billOutOld.productInBill[j].number))
+                            {
+                                numberFinal = billOutnew.productInBill[i].number - billOutOld.productInBill[j].number;
+                                index = checkExist(billOutnew.productInBill[i].productNumber);
+                                itemEdit = itemsInWarehouse[index];
+
+                                itemEdit.number = itemEdit.number - numberFinal;
+                                itemsInWarehouse[index] = itemEdit;
+
+                                SaveFileData(itemsInWarehouse);
+                                loadData();
+
+                            }
+
+                        }
+                    }
+                    
+                    for (int i = 0; i < billOutOld.productInBill.Count; i++)
+                    {
+                        ProductInBill product = new ProductInBill();
+                        bool skip = false;
+                        for (int j = 0; j < productTemps.Count; j++)
+                        {
+                            if (billOutOld.productInBill[i].productNumber == productTemps[j])
+                            {
+                                skip = true;
+                                break;
+                            }
+                        }
+                        if (!skip)
+                        {
+                            Warehouse warehouse = new Warehouse();
+                            product = billOutOld.productInBill[i];
+                            int index = checkExist(product.productNumber);
+                            warehouse = itemsInWarehouse[index];
+                            warehouse.number = warehouse.number + product.number;
+
+                            itemsInWarehouse[index] = warehouse;
+
+                            SaveFileData(itemsInWarehouse);
+                            loadData();
+                        }
+
+                    }
+                }
+                SaveFileData(itemsInWarehouse);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        public bool updateWareHouseOutToEdit(BillOut billOut)
+        {
+            try
+            {
+                for (int i = 0; i < billOut.productInBill.Count; i++)
+                {
+                    for (int j = 0; j < itemsInWarehouse.Count; j++)
+                    {
+                        if (billOut.productInBill[i].productNumber == itemsInWarehouse[j].productNumber && billOut.productInBill[i].number != itemsInWarehouse[j].number)
+                        {
+                            Warehouse itemEdit = itemsInWarehouse[j];
+                            int numberOld = itemEdit.number;
+                            itemEdit.number = numberOld - billOut.productInBill[i].number;
+                            itemsInWarehouse[j] = itemEdit;
+                        }
+                    }
+                }
+                SaveFileData(itemsInWarehouse);
+                return true;
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 return false;

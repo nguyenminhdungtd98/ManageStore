@@ -33,17 +33,20 @@ namespace _21880024.Pages
         public int error { get; set; }
         public void OnGet()
         {
-            if (error.Equals(1))
+            if (error.Equals(Error.DUPLICATE))
             {
-                SetAlert("Mã hoặc tên loại hàng đã tồn tại", 3);
+                SetAlert(ErrorMessage.DUPLICATE, Error.ERROR);
             }
-            else if (error.Equals(2))
+            else if (error.Equals(Error.ZERO))
             {
-                SetAlert("Mã loại hàng phải khác 0", 3);
+                SetAlert(ErrorMessage.ZERO, Error.ERROR);
             }
-            else if (error.Equals(-1))
+            else if (error.Equals(Error.SUCCESS))
             {
-                SetAlert("Thêm Loại hàng thành công", 1);
+                SetAlert(ErrorMessage.SUCCESS, Error.SUCCESS);
+            } else if (error.Equals(Error.PERMISION))
+            {
+                SetAlert(ErrorMessage.PERMISION, Error.ERROR);
             }
             productTypes = new List<ProductType>();
             int idTemp = 0;
@@ -61,10 +64,16 @@ namespace _21880024.Pages
             switch (idTemp)
             {
                 case 1:
-                    if (idDelete > 0)
+
+                    int result = ProductTypeServices.delete(idDelete);
+                    if (result == Error.ERROR)
                     {
-                        ProductTypeServices.delete(idDelete);
+                        Response.Redirect("/ProductType?error=" + Error.ERROR);
+                    } else if (result == Error.PERMISION)
+                    {
+                        Response.Redirect("/ProductType?error=" + Error.PERMISION);
                     }
+                    
                     
                     break;
                 case 2:
@@ -88,16 +97,16 @@ namespace _21880024.Pages
                     if (ProductTypeServices.checkExist(productTypeNumber, productTypeName) < 0)
                     {
                         ProductTypeServices.add(productType);
-                        Response.Redirect("/ProductType?error=-1");
+                        Response.Redirect("/ProductType?error=" + Error.SUCCESS);
                     }
                     else
                     {
-                        Response.Redirect("/ProductType?error=1");
+                        Response.Redirect("/ProductType?error=" + Error.DUPLICATE);
                     }
                 }
                 else
                 {
-                    Response.Redirect("/ProductType?error=2");
+                    Response.Redirect("/ProductType?error="+ Error.ERROR);
                 }
             }
             else if(idUpdate > 0 )
@@ -105,12 +114,12 @@ namespace _21880024.Pages
                 ProductType productType = new ProductType(productTypeNumber, productTypeName);
                 if (ProductTypeServices.checkExistToUpdate(productTypeNumber, idUpdate, productTypeName) > 0)
                 {
-                    Response.Redirect("/ProductType?error=1");
+                    Response.Redirect("/ProductType?error=" + Error.DUPLICATE);
                 }
                 else
                 {
                     ProductTypeServices.update(productType, idUpdate);
-                    Response.Redirect("/ProductType?error=-1");
+                    Response.Redirect("/ProductType?error=" + Error.SUCCESS);
                 }
             }
             else
@@ -122,7 +131,7 @@ namespace _21880024.Pages
         protected void SetAlert(string message, int type)
         {
             TempData["AlertMessage"] = message;
-            if (type == 1)
+            if (type == -2)
             {
                 TempData["AlertType"] = "alert-success";
 
@@ -131,7 +140,7 @@ namespace _21880024.Pages
             {
                 TempData["AlertType"] = "alert-warning";
             }
-            else if (type == 3)
+            else if (type == -3)
             {
                 TempData["AlertType"] = "alert-danger";
             }

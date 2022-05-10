@@ -385,6 +385,53 @@ namespace _21880024.DAL
                 throw new Exception(e.Message);
             }
         }
+        public List<Product> findByProductType(string name)
+        {
+            try
+            {
+                loadData();
+                List<Product> productTemps = new List<Product>();
+                foreach (Product item in products)
+                {
+                    if (item.productType == name)
+                    {
+                        productTemps.Add(item);
+                    }
+                }
+                return productTemps;
 
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+        public bool deleteAllProductByProductType(string name)
+        {
+            try
+            {
+                loadData();
+                List<int> ids = new List<int>();
+                foreach (Product product in products)
+                {
+                    if (product.productType ==  name)
+                    {
+                        ids.Add(product.productNumber);
+                    }
+                }
+                for(int i = 0; i < ids.Count; i++)
+                {
+                    delete(ids[i]);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
     }
+
 }

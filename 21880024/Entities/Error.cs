@@ -14,6 +14,8 @@ namespace _21880024.Entities
         public const int NOT_FOUND = -5;
         public const int NULL_VALUE = -6;
         public const int OUTSTOCK = -7;
+        public const int EMPTY_PRODUCTTYPE = -8;
+        public const int PERMISION = -9;
     }
 
 }

@@ -83,6 +83,7 @@ namespace _21880024.Pages
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 Response.Redirect("/BillUpdate?error=" + Error.ERROR);
             }
         }

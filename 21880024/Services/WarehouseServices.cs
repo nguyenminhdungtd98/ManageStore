@@ -50,6 +50,7 @@ namespace _21880024.Services
             }
             catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return null;
             }
         }

@@ -32,6 +32,7 @@ namespace _21880024.DAL
 
         public BillOut findById(int id)
         {
+            loadData();
             BillOut BillOut = new BillOut();
             foreach (BillOut item in billOuts)
             {
@@ -71,6 +72,27 @@ namespace _21880024.DAL
             }
         }
         public int checkExist(int id)
+        {
+            try
+            {
+                int index = Error.NOT_FOUND;
+                billOuts = loadData();
+                for (int i = 0; i < billOuts.Count; i++)
+                {
+                    if (billOuts[i].numberBillOut.Equals(id))
+                    {
+                        index = i;
+                        break;
+                    }
+                }
+                return index;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public int checkExistGetId(int id)
         {
             try
             {
@@ -270,7 +292,7 @@ namespace _21880024.DAL
             {
                 switch (typeSearch)
                 {
-                    case "numberBillOut":
+                    case "numberBill":
                         foreach (BillOut bi in billOuts)
                         {
                             bool convertInt = int.TryParse(key, out int result);
@@ -312,6 +334,7 @@ namespace _21880024.DAL
                 return true;
             }catch(Exception e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
         }
@@ -446,5 +469,71 @@ namespace _21880024.DAL
                 return result;
             }
         }
+        public bool deleteAllProductInBill()
+        {
+            try
+            {
+                List<ProductInBill> deleteProductInBills = new List<ProductInBill>();
+                SaveFileData(deleteProductInBills);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        public bool SaveBillOutTemp(List<BillOut> billOuts)
+        {
+            try
+            {
+                string productsUpdate = JsonConvert.SerializeObject(billOuts);
+                using (var output = new StreamWriter(@"D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\Data\BillOutTemp.json"))
+                {
+                    if (null != productsUpdate)
+                    {
+                        // optionally modify line.
+                        output.WriteLine(productsUpdate);
+                    }
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        public bool deleteAllBillOutTemp()
+        {
+            try
+            {
+                List<BillOut> billOutsDelete = new List<BillOut>();
+                SaveBillOutTemp(billOutsDelete);
+                return true;
+            }catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+        public List<BillOut> loadBillOutTemp()
+        {
+            try
+            {
+                string billOutsJson = "";
+                billOutsJson = System.IO.File.ReadAllText(@"D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\Data\BillOutTemp.json");
+                List<BillOut> billOutsTemp = JsonConvert.DeserializeObject<List<BillOut>>(billOutsJson);
+
+
+                return billOutsTemp;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+        }
+       
     }
 }

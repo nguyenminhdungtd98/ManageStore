@@ -30,6 +30,10 @@ namespace _21880024.Pages
         public void OnGet()
         {
             productTypes = ProductTypeServices.findAll();
+            if (productTypes == null || productTypes.Count == 0)
+            {
+                Response.Redirect("/index?error=" + Error.EMPTY_PRODUCTTYPE);
+            }
             if (error.Equals(Error.DUPLICATE))
             {
                 SetAlert(ErrorMessage.DUPLICATE, 3);
@@ -71,11 +75,11 @@ namespace _21880024.Pages
                 TempData["AlertType"] = "alert-success";
 
             }
-            else if (type == 2)
+            else if (type == -2)
             {
                 TempData["AlertType"] = "alert-warning";
             }
-            else if (type == 3)
+            else if (type == -3)
             {
                 TempData["AlertType"] = "alert-danger";
             }

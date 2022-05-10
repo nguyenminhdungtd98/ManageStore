@@ -47,23 +47,26 @@ namespace _21880024.Pages
         public void OnGet()
         {
             
-            if (error.Equals(1))
+            if (error.Equals(Error.DUPLICATE))
             {
-                SetAlert("Mã sản phẩm đã tồn tại", 3);
+                SetAlert(ErrorMessage.DUPLICATE, Error.ERROR);
             }
-            else if (error.Equals(2))
+            else if (error.Equals(Error.ZERO))
             {
-                SetAlert("Mã sản phẩm phải khác 0", 3);
-            } else if (error.Equals(-1))
+                SetAlert(ErrorMessage.ZERO, Error.ERROR);
+            } else if (error.Equals(Error.SUCCESS))
             {
-                SetAlert("Thêm sản phẩm thành công", 1);
+                SetAlert(ErrorMessage.SUCCESS, Error.SUCCESS);
+            } else if (error.Equals(Error.EMPTY_PRODUCTTYPE))
+            {
+                SetAlert(ErrorMessage.EMPTY_PRODUCTTYPE, Error.ERROR);
             }
             products = new List<Product>();
-            if(id > 0)
+            products = ProductServices.findAll();
+            if (id > 0)
             {
                 ProductServices.delete(id);
             }
-            products = ProductServices.findAll();
 
         }
         public void OnPost()
@@ -74,7 +77,7 @@ namespace _21880024.Pages
         protected void SetAlert(string message, int type)
         {
             TempData["AlertMessage"] = message;
-            if (type == 1)
+            if (type == -2)
             {
                 TempData["AlertType"] = "alert-success";
 
@@ -83,7 +86,7 @@ namespace _21880024.Pages
             {
                 TempData["AlertType"] = "alert-warning";
             }
-            else if (type == 3)
+            else if (type == -3)
             {
                 TempData["AlertType"] = "alert-danger";
             }

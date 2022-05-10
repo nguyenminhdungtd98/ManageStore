@@ -17,7 +17,10 @@ namespace _21880024.Entities
             this.numberBillOut = numberBillOut;
             this.createDate = createDate;
             this.productInBill = productInBill;
-
+        }
+        public object Shallowcopy()
+        {
+            return this.MemberwiseClone();
         }
 
 
