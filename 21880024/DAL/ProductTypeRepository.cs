@@ -44,7 +44,7 @@ namespace _21880024.DAL
             try
             {
                 productTypes = new List<ProductType>();
-                string productTypeJson = System.IO.File.ReadAllText(@"D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\Data\ProductType.json");
+                string productTypeJson = System.IO.File.ReadAllText(@".\Data\ProductType.json");
                 List<ProductType> productTypesTemp = JsonConvert.DeserializeObject<List<ProductType>>(productTypeJson);
                 if (productTypesTemp != null)
                 {
@@ -95,7 +95,7 @@ namespace _21880024.DAL
             try
             {
                 string productsUpdate = JsonConvert.SerializeObject(productTypes);
-                using (var output = new StreamWriter(@"D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\Data\ProductType.json"))
+                using (var output = new StreamWriter(@".\Data\ProductType.json"))
                 {
                     if (null != productsUpdate)
                     {

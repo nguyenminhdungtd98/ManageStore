@@ -159,7 +159,7 @@ namespace _21880024.DAL
             try
             {
                 string productsUpdate = JsonConvert.SerializeObject(billOuts);
-                using (var output = new StreamWriter(@"D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\Data\BillOut.json"))
+                using (var output = new StreamWriter(@".\Data\BillOut.json"))
                 {
                     if (null != productsUpdate)
                     {
@@ -180,7 +180,7 @@ namespace _21880024.DAL
             try
             {
                 string billOutsJson = "";
-                billOutsJson = System.IO.File.ReadAllText(@"D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\Data\BillOut.json");
+                billOutsJson = System.IO.File.ReadAllText(@".\Data\BillOut.json");
                 List<BillOut> billOutsTemp = JsonConvert.DeserializeObject<List<BillOut>>(billOutsJson);
                 if (billOutsTemp != null)
                 {
@@ -343,7 +343,7 @@ namespace _21880024.DAL
             try
             {
                 string productInBillJson = "";
-                productInBillJson = System.IO.File.ReadAllText(@"D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\Data\ProductInBill.json");
+                productInBillJson = System.IO.File.ReadAllText(@".\Data\ProductInBill.json");
                 List<ProductInBill> productInBillsTemp = JsonConvert.DeserializeObject<List<ProductInBill>>(productInBillJson);
                 if (productInBillsTemp != null)
                 {
@@ -363,7 +363,7 @@ namespace _21880024.DAL
             try
             {
                 string productInBillsJson = JsonConvert.SerializeObject(productInBills);
-                using (var output = new StreamWriter(@"D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\Data\ProductInBill.json"))
+                using (var output = new StreamWriter(@".\Data\ProductInBill.json"))
                 {
                     if (null != productInBillsJson)
                     {
@@ -488,7 +488,7 @@ namespace _21880024.DAL
             try
             {
                 string productsUpdate = JsonConvert.SerializeObject(billOuts);
-                using (var output = new StreamWriter(@"D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\Data\BillOutTemp.json"))
+                using (var output = new StreamWriter(@".\Data\BillOutTemp.json"))
                 {
                     if (null != productsUpdate)
                     {
@@ -522,7 +522,7 @@ namespace _21880024.DAL
             try
             {
                 string billOutsJson = "";
-                billOutsJson = System.IO.File.ReadAllText(@"D:\StudyDoc\IT\Học kì 2\Kĩ thuật lập trình\21880024\21880024\Data\BillOutTemp.json");
+                billOutsJson = System.IO.File.ReadAllText(@".\Data\BillOutTemp.json");
                 List<BillOut> billOutsTemp = JsonConvert.DeserializeObject<List<BillOut>>(billOutsJson);
 
 
