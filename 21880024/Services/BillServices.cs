@@ -108,12 +108,11 @@ namespace _21880024.Services
                 WareHouseRepository wRepository = WareHouseRepository.getInstance();
                 ProductRepository pRepository = ProductRepository.getInstance();
                 Bill billOld = repository.findById(idCurrent);
-                Warehouse warehouse = wRepository.findById(bill.productNumber);
+                Warehouse warehouse = wRepository.findById(billOld.productNumber);
                 int numberFinal = 0;
                 if (billOld.productName.Equals(bill.productName))
                 {
-                    numberFinal = billOld.number - bill.number;
-                    warehouse.number += numberFinal;
+                    warehouse.number = bill.number;
                     wRepository.updateItem(warehouse);
                 }
                 else

@@ -199,7 +199,7 @@ namespace _21880024.DAL
                 {
                     if (warehouse.productNumber.Equals(itemsInWarehouse[i].productNumber))
                     {
-                        if (warehouse.number == 0)
+                        if (warehouse.number <= 0)
                         {
                             index = i;
                         }
