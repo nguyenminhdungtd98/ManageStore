@@ -65,7 +65,7 @@ namespace _21880024.Pages
                 {
                     Response.Redirect("/BillIn?error=" + Error.NULL_VALUE);
                 }
-                
+                numberBill = BillServices.getMaxId() + 1;
                 //add bill in
                 Bill bill = new Bill();
                 bill.createDate = DateTime.Now;
@@ -73,6 +73,7 @@ namespace _21880024.Pages
                 bill.productName = productName;
                 bill.number = number;
                 bill.productType = productTypeTemp.productType;
+                bill.numberBill = numberBill;
                 int result = BillServices.add(bill);
                 if (result == Error.ZERO)
                 {

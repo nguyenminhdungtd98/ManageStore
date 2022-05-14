@@ -21,13 +21,12 @@ namespace _21880024.Pages
         public int id { get; set; }
         public void OnGet()
         {
-            if (id != 0) {
+            if (id > 0) {
                 if (BillServices.delete(id) == Error.SUCCESS)
                 {
                     SetAlert(ErrorMessage.SUCCESS, Error.SUCCESS);
                 }
             }
-
             bills = BillServices.findAll();
         }
         public void OnPost()

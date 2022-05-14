@@ -39,6 +39,8 @@ namespace _21880024.Pages
         public string edit { get; set; }
         [BindProperty(SupportsGet = true)]
         public int idUpdate { get; set; }
+        [BindProperty]
+        public List<Warehouse> productsInStock { get; set; }
 
         public BillOut billOut { get; set; }
         public BillOut billOutOld = new BillOut();
@@ -64,6 +66,7 @@ namespace _21880024.Pages
                 }
                 List<BillOut> billOutTemps = new List<BillOut>();
                 billOutTemps = BillOutServices.loadBillOutTemp();
+                productsInStock = WarehouseServices.findAll();
                 // if bill out temp  = null then Get bill out and save to txt file
                 if (billOut.numberBillOut == 0)
                 {
