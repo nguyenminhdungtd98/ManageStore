@@ -66,6 +66,7 @@ namespace _21880024.Pages
             if (id > 0)
             {
                 ProductServices.delete(id);
+                Response.Redirect("/index?error=" + Error.SUCCESS);
             }
 
         }
